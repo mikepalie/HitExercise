@@ -7,7 +7,6 @@ namespace HitExercise.Models
     {
         [Key]
         public int CountryId { get; set; }
-        public int CountryCode { get; set; }
         public string Name { get; set; }
 
         //Nav property

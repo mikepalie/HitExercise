@@ -7,7 +7,6 @@ namespace HitExercise.Models
     {
         [Key]
         public int CategoryId { get; set; }
-        public int CategoryCode { get; set; }
         public string Name { get; set; }
 
         //Nav Property
