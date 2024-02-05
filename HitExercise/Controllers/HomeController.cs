@@ -31,7 +31,7 @@ namespace HitExercise.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string name, int category, int afm, string address, int phone, string email, int country, bool isActive)
+        public IActionResult Create( string name, int category, int afm, string address, int phone, string email, int country, bool isActive)
         {
             Supplier newSupplier = new Supplier() { Name = name, CategoryId = category, Afm = afm, Address = address, Phone = phone, Email = email, CountryId = country, IsActive = isActive };
             _context.Suppliers.Add(newSupplier);
@@ -40,11 +40,52 @@ namespace HitExercise.Controllers
             TempData["SuccessMessage"] = "ΕΠΙΤΥΧΗΣ ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ!";
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult Edit(int SupplierId, string name, int category, int afm, string address, int phone, string email, int country, string isActive)
+        {
+            var existingSupplier = _context.Suppliers.Find(SupplierId);
+            if (existingSupplier != null)
+            {
+                existingSupplier.Name = name;
+                existingSupplier.CategoryId = category;
+                existingSupplier.Afm = afm;
+                existingSupplier.Address = address;
+                existingSupplier.Phone = phone;
+                existingSupplier.Email = email;
+                existingSupplier.CountryId = country;
+                existingSupplier.IsActive = (isActive == "true");
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int SupplierId)
+        {
+            var existingSupplier = _context.Suppliers.Find(SupplierId);
+            if (existingSupplier != null)
+            {
+                _context.Suppliers.Remove(existingSupplier);
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
