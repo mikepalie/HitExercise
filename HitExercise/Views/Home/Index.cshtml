@@ -41,12 +41,9 @@
                     <td>@supplier.Country.Name</td>
                     <td>@(supplier.IsActive ? "Ενεργός" : "Ανενεργός")</td>
                     <td class="d-flex">
-                        <a asp-controller="Home" asp-action="EditForm" asp-route-SupplierId="@supplier.SupplierId" class="btn btn-success edit1-btn mr-2 ">ΕΠΕΞΕΡΓΑΣΙΑ</a>
+                        <a asp-controller="Home" asp-action="Edit" asp-route-SupplierId="@supplier.SupplierId" class="btn btn-success edit1-btn mr-2 ">ΕΠΕΞΕΡΓΑΣΙΑ</a>
 
-                        <button class="btn btn-danger delete-btn " data-toggle="modal" data-target="#deleteModal" 
-                        data-name="@supplier.Name"
-                        data-id="@supplier.SupplierId"
-                        >ΔΙΑΓΡΑΦΗ</button>
+                        <button class="btn btn-danger delete-btn " data-toggle="modal" data-target="#deleteModal" data-name="@supplier.Name"data-id="@supplier.SupplierId">ΔΙΑΓΡΑΦΗ</button>
                     </td>
                 </tr>
             }

@@ -1,5 +1,6 @@
 ﻿using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Interfaces.Services;
 using HitExercise.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,15 @@ namespace HitExercise.Controllers
     public class HomeController : Controller
     {
         private readonly ISupplierRepository _supplierRepository;
+        private readonly IValidationService _validationService;
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ISupplierRepository supplierRepository)
+        public HomeController(ILogger<HomeController> logger, ISupplierRepository supplierRepository, IValidationService validationService)
         {
             _logger = logger;
             _supplierRepository = supplierRepository;
+            _validationService = validationService;
         }
 
         [HttpGet]
@@ -37,15 +40,29 @@ namespace HitExercise.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create( Supplier supplier)
+        public IActionResult Create(Supplier supplier)
         {
-            _supplierRepository.Add(supplier);
-            TempData["SuccessMessage"] = "ΕΠΙΤΥΧΗΣ ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ!";
+            if (ModelState.IsValid)
+            {
+                if (!_validationService.IsNameUnique(supplier.Name))
+                {
+                    ModelState.AddModelError("name", "Η ονομασία υπάρχει ήδη.");
+                    return View(supplier);
+                }
+                if (!_validationService.IsAfmOk(supplier.Afm))
+                {
+                    ModelState.AddModelError("afm", "To AΦΜ δεν είναι έγκυρο.");
+                    return View(supplier);
+                }
+
+                _supplierRepository.Add(supplier);
+                TempData["SuccessMessage"] = "ΕΠΙΤΥΧΗΣ ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ!";
+            }
 
             return RedirectToAction("Index");
         }
 
-        public IActionResult EditForm(int supplierId)
+        public IActionResult Edit(int supplierId)
         {
             var supplier = _supplierRepository.GetById(supplierId);
             return View(supplier);
@@ -54,7 +71,21 @@ namespace HitExercise.Controllers
         [HttpPost]
         public IActionResult Edit(Supplier supplier)
         {
-            _supplierRepository.Update(supplier);
+            if (ModelState.IsValid)
+            {
+                if (!_validationService.IsEditableNameUnique(supplier.Name))
+                {
+                    ModelState.AddModelError("name", "Η ονομασία υπάρχει ήδη.");
+                    return View(supplier);
+                }
+                if (!_validationService.IsAfmOk(supplier.Afm))
+                {
+                    ModelState.AddModelError("afm", "To AΦΜ δεν είναι έγκυρο.");
+                    return View(supplier);
+                }
+
+                _supplierRepository.Update(supplier);
+            }
             return RedirectToAction("Index");
         }
 
@@ -72,13 +103,13 @@ namespace HitExercise.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        _context.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _supplierRepository.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

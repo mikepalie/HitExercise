@@ -1,7 +1,9 @@
 using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Interfaces.Services;
 using HitExercise.Models;
 using HitExercise.Repositories;
+using HitExercise.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,11 @@ namespace HitExercise
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IValidationService, ValidationService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+           
+      
 
         }
 

@@ -16,7 +16,7 @@ namespace HitExercise.Models
         [Required(ErrorMessage = "Το ΑΦΜ είναι υποχρεωτικό")]
         [RegularExpression(@"^\d{9}$", ErrorMessage = "Το ΑΦΜ πρέπει να έχει 9 ψηφία")]
         [DisplayName("*ΑΦΜ:")]
-        public int Afm { get; set; }
+        public string Afm { get; set; }
 
         [StringLength(100, MinimumLength = 5, ErrorMessage = "Η Διεύθυνση πρέπει να είναι μεταξύ 5 και 100 χαρακτήρων")]
         [DisplayName("ΔΙΕΥΘΥΝΣΗ:")]

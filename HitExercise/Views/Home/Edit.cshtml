@@ -10,16 +10,9 @@
     </div>
     <div class="form-group">
         <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" class="catalog__select form-control" id="editCategory" required>
+        <select asp-for="CategoryId" class="catalog__select form-control" id="category" required>
             <option value="">EΠΙΛΕΞΤΕ</option>
-            <option value="1">Food-Supply</option>
-            <option value="2">Room-Equipment</option>
-            <option value="3">Electronic-Equipment</option>
-            <option value="4">Medical-Equipment</option>
-            <option value="5">Garden-Equipment</option>
-            <option value="6">Pool-Equipment</option>
-            <option value="7">FireSecurity-Equipment</option>
-            <option value="8">Plumber-Equipment</option>
+
         </select>
     </div>
     <div class="form-group">
@@ -40,33 +33,8 @@
     </div>
     <div class="form-group">
         <label asp-for="CountryId"></label>
-        <select asp-for="CountryId" class="catalog__select form-control" id="editCountry" required>
+        <select asp-for="CountryId" class="catalog__select form-control" id="country" required>
             <option value="">ΕΠΙΛΕΞΤΕ</option>
-            <option value="1">Argentina</option>
-            <option value="2">Bangladesh</option>
-            <option value="3">Belgium</option>
-            <option value="4">China</option>
-            <option value="5">Chile</option>
-            <option value="6">Denmark</option>
-            <option value="7">Egypt</option>
-            <option value="8">France</option>
-            <option value="9">Germany</option>
-            <option value="10">Greece</option>
-            <option value="11">India</option>
-            <option value="12">Italy</option>
-            <option value="13">Japan</option>
-            <option value="14">Malaysia</option>
-            <option value="15">Morroco</option>
-            <option value="16">Netherlands</option>
-            <option value="17">Pakistan</option>
-            <option value="18">Portugal</option>
-            <option value="19">Russia</option>
-            <option value="20">Spain</option>
-            <option value="21">Sweeden</option>
-            <option value="22">Turkey</option>
-            <option value="23">USA</option>
-            <option value="24">United Kingdom</option>
-            <option value="25">Venezuela</option>
         </select>
     </div>
 
@@ -78,7 +46,7 @@
         <input asp-for="IsActive" type="radio" id="inactive" value="false" />
     </div>
     <br />
-
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <p>Τα πεδία με * είναι υποχρεωτικά</p>
     <input type="submit" class="btn btn-info save-btn" value="ΑΠΟΘΗΚΕΥΣΗ" />
     <a class="btn btn-danger cancel-btn" asp-controller="Home" asp-action="Index">ΑΚΥΡΩΣΗ</a>
@@ -88,4 +56,5 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="~/js/DisableInactive.js"></script>
-
+<script type="text/javascript" src="~/js/RenderCategories.js" ></script>
+<script type="text/javascript" src="~/js/RenderCountries.js" ></script>
