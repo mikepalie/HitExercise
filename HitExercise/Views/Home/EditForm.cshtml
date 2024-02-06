@@ -1,0 +1,96 @@
+﻿@model HitExercise.Models.Supplier
+
+
+
+    <form method="post" asp-action="Edit">
+         
+        <input type="hidden" asp-for="SupplierId" class="editId" />
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" class="editName" value="" placeholder="3-80 χαρακτήρες" minlength="3" maxlength="80" required /><br />
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" class="catalog__select" id="editCategory"  required>
+            <option value="">EΠΙΛΕΞΤΕ</option>
+            <option value="1">Food-Supply</option>
+            <option value="2">Room-Equipment</option>
+            <option value="3">Electronic-Equipment</option>
+            <option value="4">Medical-Equipment</option>
+            <option value="5">Garden-Equipment</option>
+            <option value="6">Pool-Equipment</option>
+            <option value="7">FireSecurity-Equipment</option>
+            <option value="8">Plumber-Equipment</option>
+        </select>
+        <br />
+        <br />
+        <label asp-for="Afm"></label>
+        <input asp-for="Afm" type="text" class="editAfm" value="" placeholder="9 ψηφία" pattern="[0-9]{9}" title="Παρακαλώ εισάγετε 9-ψήφιο αριθμο!" required /><br />
+        <label asp-for="Address"></label>
+        <input asp-for="Address" type="text" class="editAddress"  value="" placeholder="5-100 χαρακτήρες" minlength="5" maxlength="100" /><br />
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" type="text" class="editPhone"  value="" placeholder="10 ψηφία" pattern="[0-9]{10}" title="Παρακαλώ εισάγετε 10-ψήφιο αριθμο!" required /><br />
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="email" class="editEmail"  value="" placeholder="5-50 χαρακτήρες" required /><br />
+        <label asp-for="CountryId"></label>
+        <select asp-for="CountryId" class="catalog__select" id="editCountry"  required>
+            <option value="">ΕΠΙΛΕΞΤΕ</option>
+            <option value="1">Argentina</option>
+            <option value="2">Bangladesh</option>
+            <option value="3">Belgium</option>
+            <option value="4">China</option>
+            <option value="5">Chile</option>
+            <option value="6">Denmark</option>
+            <option value="7">Egypt</option>
+            <option value="8">France</option>
+            <option value="9">Germany</option>
+            <option value="10">Greece</option>
+            <option value="11">India</option>
+            <option value="12">Italy</option>
+            <option value="13">Japan</option>
+            <option value="14">Malaysia</option>
+            <option value="15">Morroco</option>
+            <option value="16">Netherlands</option>
+            <option value="17">Pakistan</option>
+            <option value="18">Portugal</option>
+            <option value="19">Russia</option>
+            <option value="20">Spain</option>
+            <option value="21">Sweeden</option>
+            <option value="22">Turkey</option>
+            <option value="23">USA</option>
+            <option value="24">United Kingdom</option>
+            <option value="25">Venezuela</option>
+        </select>
+        <br />
+        <div class="radio-container">
+            <label for="active">Ενεργός</label>
+            <input asp-for="IsActive" type="radio" id="editActive"  value="true" checked />
+
+            <label for="inactive">Ανενεργός</label>
+            <input asp-for="IsActive" type="radio" id="editInactive" value="false" />
+        </div>
+
+        <br />
+        <br />
+        <p>Τα πεδία με * είναι υποχρεωτικά</p>
+        <input type="submit" class="btn btn-info save-btn" value="ΑΠΟΘΗΚΕΥΣΗ"/>
+        <a  class="btn btn-danger cancel-btn" asp-controller="Home" asp-action="Index">ΑΚΥΡΩΣΗ</a>
+
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+      
+            // Fills the edit form with data that already exist
+        $(document).ready(function() { 
+             $('.editId').val(@Model.SupplierId)
+                    $('.editName').val('@Model.Name');
+                    $('#editCategory').val(@Model.CategoryId);
+                    $('.editAfm').val('@Model.Afm');
+                    $('.editAddress').val('@Model.Address');
+                    $('.editPhone').val('@Model.Phone');
+                    $('.editEmail').val('@Model.Email');
+                    $('#editCountry').val(@Model.Country);
+                    $('#editActive').prop('checked', @Model.IsActive);
+                    $('#editInactive').prop('checked', !@Model.IsActive);
+        })
+      
+    </script>

@@ -1,4 +1,5 @@
 ﻿using HitExercise.Data;
+using HitExercise.Interfaces.Repositories;
 using HitExercise.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,63 +14,55 @@ namespace HitExercise.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ISupplierRepository _supplierRepository;
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, ISupplierRepository supplierRepository)
         {
             _logger = logger;
-            _context = context;
+            _supplierRepository = supplierRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var suppliers = _context.Suppliers.Include(s => s.Category).Include(s => s.Country).ToList();
+            var suppliers = _supplierRepository.GetAll();
             return View(suppliers);
         }
 
-        [HttpPost]
-        public IActionResult Create( string name, int category, int afm, string address, int phone, string email, int country, bool isActive)
+        public IActionResult Create()
         {
-            Supplier newSupplier = new Supplier() { Name = name, CategoryId = category, Afm = afm, Address = address, Phone = phone, Email = email, CountryId = country, IsActive = isActive };
-            _context.Suppliers.Add(newSupplier);
-            _context.SaveChanges();
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult Create( Supplier supplier)
+        {
+            _supplierRepository.Add(supplier);
             TempData["SuccessMessage"] = "ΕΠΙΤΥΧΗΣ ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ!";
+
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public IActionResult Edit(int SupplierId, string name, int category, int afm, string address, int phone, string email, int country, string isActive)
-        {
-            var existingSupplier = _context.Suppliers.Find(SupplierId);
-            if (existingSupplier != null)
-            {
-                existingSupplier.Name = name;
-                existingSupplier.CategoryId = category;
-                existingSupplier.Afm = afm;
-                existingSupplier.Address = address;
-                existingSupplier.Phone = phone;
-                existingSupplier.Email = email;
-                existingSupplier.CountryId = country;
-                existingSupplier.IsActive = (isActive == "true");
-            }
-            _context.SaveChanges();
 
+        public IActionResult EditForm(int supplierId)
+        {
+            var supplier = _supplierRepository.GetById(supplierId);
+            return View(supplier);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Supplier supplier)
+        {
+            _supplierRepository.Update(supplier);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult Delete(int SupplierId)
         {
-            var existingSupplier = _context.Suppliers.Find(SupplierId);
-            if (existingSupplier != null)
-            {
-                _context.Suppliers.Remove(existingSupplier);
-            }
-            _context.SaveChanges();
-
+            Supplier supplier = _supplierRepository.GetById(SupplierId);
+            _supplierRepository.Delete(supplier);
             return RedirectToAction("Index");
         }
 
@@ -79,13 +72,13 @@ namespace HitExercise.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        _context.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

@@ -1,417 +1,134 @@
 ﻿@model IEnumerable<HitExercise.Models.Supplier>
 
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-<style>
-    th, td {
-        text-align: center;
-    }
-
-    .modal-body {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-
-        .modal-body label {
-            margin-bottom: 0px;
+    <style>
+        th, td {
+            text-align: center;
         }
 
-    .radio-container {
-        display: flex;
-        align-items: center;
-    }
+    </style>
 
-    .modal-body input[type="radio"] {
-        margin-right: 0px;
-        margin-bottom: 0px;
-    }
+    <br />
 
+    <a asp-controller="Home" asp-action="Create" class="btn btn-info">
+        + ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ
+    </a>
 
-    .modal-body input, select {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-    }
-</style>
+    <br />
+    <br />
 
-<br />
-<!-- Button to Open the Modal -->
-<button type="button" class="btn btn-info" data-toggle="modal" data-target="#createModal">
-    + ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ
-</button>
-
-
-<!-- Create Modal Start -->
-<div class="modal" id="createModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΜΗΘΕΥΤΗ</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form method="post" action="@Url.Action("Create", "Home")">
-
-                    <label for="name">*ΟΝΟΜΑΣΙΑ:</label>
-                    <input type="text" class="name" name="name" value="" placeholder="3-80 χαρακτήρες" minlength="3" maxlength="80" required /><br />
-                    <label for="category">*ΚΑΤΗΓΟΡΙΑ:</label>
-                    <select class="catalog__select" id="category" name="category" required>
-                        <option value="">EΠΙΛΕΞΤΕ</option>
-                        <option value="1">Food-Supply</option>
-                        <option value="2">Room-Equipment</option>
-                        <option value="3">Electronic-Equipment</option>
-                        <option value="4">Medical-Equipment</option>
-                        <option value="5">Garden-Equipment</option>
-                        <option value="6">Pool-Equipment</option>
-                        <option value="7">FireSecurity-Equipment</option>
-                        <option value="8">Plumber-Equipment</option>
-                    </select>
-                    <br />
-                    <label for="afm">*ΑΦΜ:</label>
-                    <input type="text" class="afm" name="afm" value="" placeholder="9 ψηφία" pattern="[0-9]{9}" title="Παρακαλώ εισάγετε 9-ψήφιο αριθμο!" required /><br />
-                    <label for="address">ΔΙΕΥΘΥΝΣΗ:</label>
-                    <input type="text" class="address" name="address" value="" placeholder="5-100 χαρακτήρες" minlength="5" maxlength="100" /><br />
-                    <label for="phone">ΤΗΛΕΦΩΝΟ:</label>
-                    <input type="text" class="phone" name="phone" value="" placeholder="10 ψηφία" pattern="[0-9]{10}" title="Παρακαλώ εισάγετε 10-ψήφιο αριθμο!" required /><br />
-                    <label for="email">*ΕΜΑΙL:</label>
-                    <input type="email" class="email" name="email" value="" placeholder="5-50 χαρακτήρες" required /><br />
-                    <label for="country">*XΩΡΑ:</label>
-                    <select class="catalog__select" id="country" name="country" required>
-                        <option value="">ΕΠΙΛΕΞΤΕ</option>
-                        <option value="1">Argentina</option>
-                        <option value="2">Bangladesh</option>
-                        <option value="3">Belgium</option>
-                        <option value="4">China</option>
-                        <option value="5">Chile</option>
-                        <option value="6">Denmark</option>
-                        <option value="7">Egypt</option>
-                        <option value="8">France</option>
-                        <option value="9">Germany</option>
-                        <option value="10">Greece</option>
-                        <option value="11">India</option>
-                        <option value="12">Italy</option>
-                        <option value="13">Japan</option>
-                        <option value="14">Malaysia</option>
-                        <option value="15">Morroco</option>
-                        <option value="16">Netherlands</option>
-                        <option value="17">Pakistan</option>
-                        <option value="18">Portugal</option>
-                        <option value="19">Russia</option>
-                        <option value="20">Spain</option>
-                        <option value="21">Sweeden</option>
-                        <option value="22">Turkey</option>
-                        <option value="23">USA</option>
-                        <option value="24">United Kingdom</option>
-                        <option value="25">Venezuela</option>
-                    </select>
-                    <br />
-                    <div class="radio-container">
-                        <label for="active">Ενεργός</label>
-                        <input type="radio" id="active" name="isActive" value="true" checked />
-
-                        <label for="inactive">Ανενεργός</label>
-                        <input type="radio" id="inactive" name="isActive" value="false" />
-                    </div>
-
-                    <br />
-                    <br />
-                    <br />
-                    <p>Τα πεδία με * είναι υποχρεωτικά</p>
-                    <br />
-                    <br />
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-info save-btn">ΑΠΟΘΗΚΕΥΣΗ</button>
-                        <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">ΑΚΥΡΩΣΗ</button>
-                    </div>
-                </form>
-            </div>
-
-
-
-
-        </div>
-    </div>
-</div>
-<!-- Create Modal End -->
-
-
-
-<!-- Edit Modal Start -->
-<div class="modal" id="editModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">EΠΕΞΕΡΓΑΣΙΑ ΠΡΟΜΗΘΕΥΤΗ</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form method="post" action="@Url.Action("Edit", "Home")">
-                    
-                    <input type="hidden" name="SupplierId" class="editId" />
-
-                    <label for="name">*ΟΝΟΜΑΣΙΑ:</label>
-                    <input type="text" class="editName" name="name" value="" placeholder="3-80 χαρακτήρες" minlength="3" maxlength="80" required /><br />
-                    <label for="category">*ΚΑΤΗΓΟΡΙΑ:</label>
-                    <select class="catalog__select" id="editCategory" name="category" required>
-                        <option value="">EΠΙΛΕΞΤΕ</option>
-                        <option value="1">Food-Supply</option>
-                        <option value="2">Room-Equipment</option>
-                        <option value="3">Electronic-Equipment</option>
-                        <option value="4">Medical-Equipment</option>
-                        <option value="5">Garden-Equipment</option>
-                        <option value="6">Pool-Equipment</option>
-                        <option value="7">FireSecurity-Equipment</option>
-                        <option value="8">Plumber-Equipment</option>
-                    </select>
-                    <br />
-                    <label for="afm">*ΑΦΜ:</label>
-                    <input type="text" class="editAfm" name="afm" value="" placeholder="9 ψηφία" pattern="[0-9]{9}" title="Παρακαλώ εισάγετε 9-ψήφιο αριθμο!" required /><br />
-                    <label for="address">ΔΙΕΥΘΥΝΣΗ:</label>
-                    <input type="text" class="editAddress" name="address" value="" placeholder="5-100 χαρακτήρες" minlength="5" maxlength="100" /><br />
-                    <label for="phone">ΤΗΛΕΦΩΝΟ:</label>
-                    <input type="text" class="editPhone" name="phone" value="" placeholder="10 ψηφία" pattern="[0-9]{10}" title="Παρακαλώ εισάγετε 10-ψήφιο αριθμο!" required /><br />
-                    <label for="email">*ΕΜΑΙL:</label>
-                    <input type="email" class="editEmail" name="email" value="" placeholder="5-50 χαρακτήρες" required /><br />
-                    <label for="country">*XΩΡΑ:</label>
-                    <select class="catalog__select" id="editCountry" name="country" required>
-                        <option value="">ΕΠΙΛΕΞΤΕ</option>
-                        <option value="1">Argentina</option>
-                        <option value="2">Bangladesh</option>
-                        <option value="3">Belgium</option>
-                        <option value="4">China</option>
-                        <option value="5">Chile</option>
-                        <option value="6">Denmark</option>
-                        <option value="7">Egypt</option>
-                        <option value="8">France</option>
-                        <option value="9">Germany</option>
-                        <option value="10">Greece</option>
-                        <option value="11">India</option>
-                        <option value="12">Italy</option>
-                        <option value="13">Japan</option>
-                        <option value="14">Malaysia</option>
-                        <option value="15">Morroco</option>
-                        <option value="16">Netherlands</option>
-                        <option value="17">Pakistan</option>
-                        <option value="18">Portugal</option>
-                        <option value="19">Russia</option>
-                        <option value="20">Spain</option>
-                        <option value="21">Sweeden</option>
-                        <option value="22">Turkey</option>
-                        <option value="23">USA</option>
-                        <option value="24">United Kingdom</option>
-                        <option value="25">Venezuela</option>
-                    </select>
-                    <br />
-                    <div class="radio-container">
-                        <label for="active">Ενεργός</label>
-                        <input type="radio" id="editActive" name="IsActive" value="true" checked  />
-
-                        <label for="inactive">Ανενεργός</label>
-                        <input type="radio" id="editInactive" name="IsActive" value="false" />
-                    </div>
-
-                    <br />
-                    <br />
-                    <br />
-                    <p>Τα πεδία με * είναι υποχρεωτικά</p>
-                    <br />
-                    <br />
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-info save-btn">ΑΠΟΘΗΚΕΥΣΗ</button>
-                        <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">ΑΚΥΡΩΣΗ</button>
-                    </div>
-                </form>
-            </div>
-
-
-
-
-        </div>
-    </div>
-</div>
-<!-- Edit Modal End -->
-
-<!-- Edit Modal Start -->
-<div class="modal" id="deleteModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">ΔΙΑΓΡΑΦΗ ΠΡΟΜΗΘΕΥΤΗ</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form  method="post" action="@Url.Action("Delete", "Home")">
-                    <input type="hidden" name="SupplierId" class="deleteId" />
-                    <a>Ο προμηθευτης </a>
-                    <a id="supname"></a>
-                    <a>Θα διαγραφεί</a><br />
-                    
-                    <button type="submit" class="btn btn-info save-btn">ΔΙΑΓΡΑΦΗ</button>
-                    <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">ΑΚΥΡΩΣΗ</button>
-                </form>
-                <p></p>
-            </div>
-
-
-
-
-        </div>
-    </div>
-</div>
-<!-- Edit Modal End -->
-<br />
-<br />
-
-<h3>ΠΡΟΜΗΘΕΥΤΕΣ</h3>
-<!-- Table Start -->
-<table class="table">
-    <thead>
-        <tr>
-            <th>ΟΝΟΜΑΣΙΑ</th>
-            <th>ΚΑΤΗΓΟΡΙΑ</th>
-            <th>ΑΦΜ</th>
-            <th>ΔΙΕΥΘΥΝΣΗ</th>
-            <th>ΤΗΛΕΦΩΝΟ</th>
-            <th>ΕΜAIL</th>
-            <th>ΧΩΡΑ</th>
-            <th>ΚΑΤΑΣΤΑΣΗ</th>
-            <th>ΕΝΕΡΓΕΙΕΣ</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var supplier in Model)
-        {
+    <h3>ΠΡΟΜΗΘΕΥΤΕΣ</h3>
+    <!-- Table Start -->
+    <table class="table">
+        <thead>
             <tr>
-                <td>@supplier.Name</td>
-                <td>@supplier.Category.Name</td>
-                <td>@supplier.Afm</td>
-                <td>@supplier.Address</td>
-                <td>@supplier.Phone</td>
-                <td>@supplier.Email</td>
-                <td>@supplier.Country.Name</td>
-                <td>@(supplier.IsActive ? "Ενεργός" : "Ανενεργός")</td>
-                <td class="d-flex">
-
-                    <button class="btn btn-success edit1-btn mr-2 " data-toggle="modal" data-target="#editModal"
-                    data-id ="@supplier.SupplierId"
-                    data-name="@supplier.Name"
-                    data-category="@supplier.CategoryId"
-                    data-afm="@supplier.Afm"
-                    data-address="@supplier.Address"
-                    data-phone="@supplier.Phone"
-                    data-email="@supplier.Email"
-                    data-country="@supplier.CountryId"
-                    data-state="@supplier.IsActive">ΕΠΕΞΕΡΓΑΣΙΑ</button>
-
-                    <button class="btn btn-danger delete-btn " data-toggle="modal" data-target="#deleteModal" 
-                    data-name="@supplier.Name"
-                    data-id="@supplier.SupplierId"
-                    >ΔΙΑΓΡΑΦΗ</button>
-                </td>
+                <th>ΟΝΟΜΑΣΙΑ</th>
+                <th>ΚΑΤΗΓΟΡΙΑ</th>
+                <th>ΑΦΜ</th>
+                <th>ΔΙΕΥΘΥΝΣΗ</th>
+                <th>ΤΗΛΕΦΩΝΟ</th>
+                <th>ΕΜAIL</th>
+                <th>ΧΩΡΑ</th>
+                <th>ΚΑΤΑΣΤΑΣΗ</th>
+                <th>ΕΝΕΡΓΕΙΕΣ</th>
             </tr>
-        }
-    </tbody>
-</table>
-<!-- Table End -->
-@if (TempData.ContainsKey("SuccessMessage"))
-{
-    <div id="successMessage" class="alert alert-success" role="alert">
-        @TempData["SuccessMessage"]
+        </thead>
+        <tbody>
+            @foreach (var supplier in Model)
+            {
+                <tr>
+                    <td>@supplier.Name</td>
+                    <td>@supplier.Category.Name</td>
+                    <td>@supplier.Afm</td>
+                    <td>@supplier.Address</td>
+                    <td>@supplier.Phone</td>
+                    <td>@supplier.Email</td>
+                    <td>@supplier.Country.Name</td>
+                    <td>@(supplier.IsActive ? "Ενεργός" : "Ανενεργός")</td>
+                    <td class="d-flex">
+                        <a asp-controller="Home" asp-action="EditForm" asp-route-SupplierId="@supplier.SupplierId" class="btn btn-success edit1-btn mr-2 ">ΕΠΕΞΕΡΓΑΣΙΑ</a>
+
+                        <button class="btn btn-danger delete-btn " data-toggle="modal" data-target="#deleteModal" 
+                        data-name="@supplier.Name"
+                        data-id="@supplier.SupplierId"
+                        >ΔΙΑΓΡΑΦΗ</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- Table End -->
+
+    <!-- Delete Modal Start -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">ΔΙΑΓΡΑΦΗ ΠΡΟΜΗΘΕΥΤΗ</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form  method="post"  asp-action="Delete">
+                        <input type="hidden" name="SupplierId" class="deleteId" />
+                        <a>Ο προμηθευτης </a>
+                        <a id="supname"></a>
+                        <a>Θα διαγραφεί</a><br />
+                        <br />
+                        <button type="submit" class="btn btn-info save-btn">ΔΙΑΓΡΑΦΗ</button>
+                        <button type="button" class="btn btn-danger cancel-btn" data-dismiss="modal">ΑΚΥΡΩΣΗ</button>
+                    </form>
+                    <p></p>
+                </div>
+
+
+
+
+            </div>
+        </div>
     </div>
-}
+    <!-- Delete Modal End -->
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript">
-
-    document.addEventListener("DOMContentLoaded", function() {
-
-        var successMessage = document.getElementById("successMessage");
-
-        if (successMessage) {
-
-            setTimeout(function() {
-                successMessage.style.display = "none";
-            }, 3000);
-
-        }
-
-    });
-
-    // Function to clear input fields in the modal
-    function clearModalFields() {
-
-        $(".name").val("");
-        $("#category").val("");
-        $(".afm").val("");
-        $(".address").val("");
-        $(".phone").val("");
-        $(".email").val("");
-        $("#country").val("");
-        $('#active').prop('checked', true);
+    @if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <div id="successMessage" class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
     }
 
-    $(document).ready(function() {
-        $('#createModal').on('hidden.bs.modal', function() {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
 
-            clearModalFields();
+        document.addEventListener("DOMContentLoaded", function() {
+
+            var successMessage = document.getElementById("successMessage");
+
+            if (successMessage) {
+
+                setTimeout(function() {
+                    successMessage.style.display = "none";
+                }, 3000);
+
+            }
+
         });
-    });
 
-    // Fill EditModal with data from editable row
-     $(document).ready(function () {
-        $('.edit1-btn').click(function () {
 
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            var category = $(this).data('category');
-            var afm = $(this).data('afm');
-            var address = $(this).data('address');
-            var phone = $(this).data('phone');
-            var email = $(this).data('email');
-            var country = $(this).data('country');
-            var state = $(this).data('state') == "True";
-            
+         $(document).ready(function () {
+            $('.delete-btn').click(function () {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
 
-            // Populate modal form fields
-            $('.editId').val(id);
-            $('.editName').val(name);
-            $('#editCategory').val(category);
-            $('.editAfm').val(afm);
-            $('.editAddress').val(address);
-            $('.editPhone').val(phone);
-            $('.editEmail').val(email);
-            $('#editCountry').val(country);
-            $('#editActive').prop('checked', state);
-            $('#editInactive').prop('checked', !state);
-        });
-    });
-
-     $(document).ready(function () {
-        $('.delete-btn').click(function () {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-
-            $('.deleteId').val(id);
-            $('#supname').html(name);
+                $('.deleteId').val(id);
+                $('#supname').html(name);
            
+            });
         });
-    });
 
 
 
 
 
-</script>
+    </script>
