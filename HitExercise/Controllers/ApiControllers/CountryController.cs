@@ -20,5 +20,16 @@ namespace HitExercise.Controllers.ApiControllers
         {
            return _countryRepository.GetAll();
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var country = _countryRepository.GetById(id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return Ok(country);
+        }
     }
 }

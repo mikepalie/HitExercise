@@ -1,5 +1,6 @@
 ﻿using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,12 +17,22 @@ namespace HitExercise.Controllers.ApiControllers
         {
             _categoryRepository = categoryRepository;
         }
-        [HttpGet]
 
+        [HttpGet]
         public object Get()
-        {
-           
+        {     
             return _categoryRepository.GetAll();
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var category = _categoryRepository.GetById(id);
+            if (category == null)
+            {
+                return NotFound(); 
+            }
+            return Ok(category); 
         }
     }
 }

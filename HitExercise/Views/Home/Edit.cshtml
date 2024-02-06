@@ -11,7 +11,8 @@
     <div class="form-group">
         <label asp-for="CategoryId"></label>
         <select asp-for="CategoryId" class="catalog__select form-control" id="category" required>
-            <option value="">EΠΙΛΕΞΤΕ</option>
+            <option value="@Model.CountryId" id="editedCat">ΕΠΙΛΕΞΤΕ</option>
+       
 
         </select>
     </div>
@@ -34,7 +35,7 @@
     <div class="form-group">
         <label asp-for="CountryId"></label>
         <select asp-for="CountryId" class="catalog__select form-control" id="country" required>
-            <option value="">ΕΠΙΛΕΞΤΕ</option>
+            <option value="@Model.CountryId" id="editedCou">ΕΠΙΛΕΞΤΕ</option>
         </select>
     </div>
 
@@ -58,3 +59,41 @@
 <script type="text/javascript" src="~/js/DisableInactive.js"></script>
 <script type="text/javascript" src="~/js/RenderCategories.js" ></script>
 <script type="text/javascript" src="~/js/RenderCountries.js" ></script>
+
+ @*Renders the edited Category*@ 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var settings = {
+            "url": "https://localhost:44327/api/Category/@Model.CategoryId",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+
+            let name = response.name;
+            $('#editedCat').text(name);
+
+        });
+    });
+</script>
+
+@*Renders the edited Country*@
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var settings = {
+            "url": "https://localhost:44327/api/Country/@Model.CountryId",
+            "method": "GET",
+            "timeout": 0,
+        };
+
+        $.ajax(settings).done(function (response) {
+
+            let name = response.name;
+            $('#editedCou').text(name);
+
+        });
+    });
+</script>

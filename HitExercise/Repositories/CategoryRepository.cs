@@ -1,5 +1,6 @@
 ﻿using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Models;
 using System.Linq;
 
 namespace HitExercise.Repositories
@@ -21,5 +22,12 @@ namespace HitExercise.Repositories
             };
             return obj;
         }
+
+        public Category GetById(int id)
+        {
+            var category = _context.Categories.Find(id);
+            return category;
+        }
+             
     }
 }

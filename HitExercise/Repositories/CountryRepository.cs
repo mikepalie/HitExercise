@@ -1,5 +1,6 @@
 ﻿using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Models;
 using System.Linq;
 
 namespace HitExercise.Repositories
@@ -19,6 +20,12 @@ namespace HitExercise.Repositories
                 Countries = _context.Countries.Select(c => new { c.CountryId, c.Name })
             };
             return obj;
+        }
+
+        public Country GetById(int id)
+        {
+            var country = _context.Countries.Find(id);
+            return country;
         }
     }
 }
