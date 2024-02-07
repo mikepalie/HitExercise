@@ -39,8 +39,10 @@ namespace HitExercise
             services.AddScoped<IValidationService, ValidationService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
-           
-      
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
+
+
 
         }
 

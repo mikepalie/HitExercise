@@ -17,14 +17,14 @@ namespace HitExercise.Controllers
     {
         private readonly ISupplierRepository _supplierRepository;
         private readonly IValidationService _validationService;
+        private readonly IEmailSender _emailSender;
 
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, ISupplierRepository supplierRepository, IValidationService validationService)
+        public HomeController(ISupplierRepository supplierRepository, IValidationService validationService, IEmailSender emailSender)
         {
-            _logger = logger;
             _supplierRepository = supplierRepository;
             _validationService = validationService;
+            _emailSender = emailSender;
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@ namespace HitExercise.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Supplier supplier)
+        public async Task<IActionResult> Create(Supplier supplier)
         {
             if (ModelState.IsValid)
             {
@@ -79,6 +79,9 @@ namespace HitExercise.Controllers
 
                 _supplierRepository.Add(supplier);
                 TempData["SuccessMessage"] = "ΕΠΙΤΥΧΗΣ ΠΡΟΣΘΗΚΗ ΠΡΟΜΗΘΕΥΤΗ!";
+
+                string message = $"Γειά σας, {supplier.Name} Ευχαριστούμε πολύ για την συνεργασία";
+                await _emailSender.SendEmailAsync(supplier.Email, "HitExercise", message);
             }
 
             return RedirectToAction("Index");
