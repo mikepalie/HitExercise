@@ -1,1 +1,3 @@
-# HitExercise
+HIT EXERCISE
+
+Technologies
