@@ -1,5 +1,6 @@
 ﻿using HitExercise.Data;
 using HitExercise.Interfaces.Repositories;
+using HitExercise.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,18 @@ namespace HitExercise.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Models.Supplier> GetAll()
+        public IEnumerable<Supplier> GetAll()
         {
             var suppliers = _context.Suppliers.Include(s => s.Category).Include(s => s.Country).ToList();
             return suppliers;
         }
 
-        public void Add(Models.Supplier newSupplier)
+        public void Add(Supplier newSupplier)
         {
             _context.Suppliers.Add(newSupplier);
             _context.SaveChanges();
         }
-        public void Update(Models.Supplier newSupplier)
+        public void Update(Supplier newSupplier)
         {
             var existingSupplier = _context.Suppliers.Find(newSupplier.SupplierId);
             if (existingSupplier != null)
@@ -44,7 +45,7 @@ namespace HitExercise.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(Models.Supplier supplier)
+        public void Delete(Supplier supplier)
         {
             if (supplier != null)
             {
@@ -53,11 +54,28 @@ namespace HitExercise.Repositories
             _context.SaveChanges();
         }
 
-
-        public Models.Supplier GetById(int id)
+        public Supplier GetById(int id)
         {
-            Models.Supplier supplier = _context.Suppliers.Find(id);
+            Supplier supplier = _context.Suppliers.Find(id);
             return supplier;
+        }
+
+        public IEnumerable<Supplier> GetSuppliersByCategoryId(int id)
+        {
+            var suppliers = _context.Suppliers.Where(s=>s.CategoryId == id).Include(s => s.Category).Include(s => s.Country).ToList();
+            return suppliers;
+        }
+
+        public IEnumerable<Supplier> GetSuppliersByCountryId(int id)
+        {
+            var suppliers = _context.Suppliers.Where(s => s.CountryId == id).Include(s => s.Category).Include(s => s.Country).ToList();
+            return suppliers;
+        }
+
+        public IEnumerable<Supplier> GetSuppliersBySearching(string searchingString)
+        {
+            var suppliers = _context.Suppliers.Where(s => s.Name.Contains(searchingString)).Include(s=>s.Category).Include(s=>s.Country).ToList();
+            return suppliers;
         }
 
         public bool ExistsWithName(string name)
@@ -73,16 +91,16 @@ namespace HitExercise.Repositories
 
         public bool isAfmValid(string afmNumber)
         {
-            // Check if the VAT number has the correct length
+            // Checks if the afmNumber has the correct length
             if (afmNumber.Length != 9)
                 return false;
 
-            // Extract the last digit
+            // Extracts the last digit
             int lastDigit;
             if (!int.TryParse(afmNumber.Substring(8, 1), out lastDigit))
                 return false;
 
-            // Calculate the checksum
+            // Calculates the checksum
             int checksum = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -93,7 +111,7 @@ namespace HitExercise.Repositories
                 checksum += digit * (int)Math.Pow(2, 8 - i);
             }
 
-            // Calculate the remainder of the division by 11 and then by 10
+            // Calculates the remainder of the division by 11 and then by 10
             checksum %= 11;
             checksum %= 10;
 

@@ -34,6 +34,28 @@ namespace HitExercise.Controllers
             return View(suppliers);
         }
 
+        [HttpGet]
+        public IActionResult SuppliersByCategory(int CategoryId)
+        {
+            var suppliers = _supplierRepository.GetSuppliersByCategoryId(CategoryId);
+            return View("Index",suppliers);
+        }
+
+
+        [HttpGet]
+        public IActionResult SuppliersByCountry(int CountryId)
+        {
+            var suppliers = _supplierRepository.GetSuppliersByCountryId(CountryId);
+            return View("Index", suppliers);
+        }
+
+        [HttpGet]
+        public IActionResult SuppliersBySearching(string searchingString)
+        {
+            var suppliers = _supplierRepository.GetSuppliersBySearching(searchingString);
+            return View("Index", suppliers);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -102,6 +124,9 @@ namespace HitExercise.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {

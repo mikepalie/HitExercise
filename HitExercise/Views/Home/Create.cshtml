@@ -1,63 +1,46 @@
 ﻿@model HitExercise.Models.Supplier
-
+@{
+    string name = Model != null ? Model.Name : "";
+    string afm = Model != null ? Model.Afm : "";
+    string address = Model != null ? Model.Address : "";
+    string phone = Model != null ? Model.Phone : "";
+    string email = Model != null ? Model.Email : "";
+    
+}
 
 
     <form method="post" asp-action="Create" style="max-width:400px;">
         <div class="form-group">
             <label asp-for="Name"></label>
-            <input asp-for="Name" type="text" class="name form-control disable-on-inactive" value="" placeholder="3-80 χαρακτήρες" minlength="3" maxlength="80" required />
+            <input asp-for="Name" type="text" class="name form-control disable-on-inactive" value="@name"  placeholder="3-80 χαρακτήρες" minlength="3" maxlength="80" required />
         </div>
         <div class="form-group">
             <label asp-for="CategoryId"></label>
             <select asp-for="CategoryId" class="catalog__select form-control" id="category"  required>
             <option value="">EΠΙΛΕΞΤΕ</option>
-        </select>
+            </select>
         </div>
         <div class="form-group">
             <label asp-for="Afm"></label>
-            <input asp-for="Afm" type="text" class="afm form-control disable-on-inactive" value="" placeholder="9 ψηφία" pattern="[0-9]{9}" title="Παρακαλώ εισάγετε 9-ψήφιο αριθμο!" required />
+            <input asp-for="Afm" type="text" class="afm form-control disable-on-inactive" value="@afm" placeholder="9 ψηφία" pattern="[0-9]{9}" title="Παρακαλώ εισάγετε 9-ψήφιο αριθμο!" required />
         </div>
         <div class="form-group">
              <label asp-for="Address"></label>
-             <input asp-for="Address" type="text" class="address form-control"  value="" placeholder="5-100 χαρακτήρες" minlength="5" maxlength="100" />
+             <input asp-for="Address" type="text" class="address form-control"  value="@address" placeholder="5-100 χαρακτήρες" minlength="5" maxlength="100" />
         </div>
         <div class="form-group">
              <label asp-for="Phone"></label>
-             <input asp-for="Phone" type="text" class="phone form-control"  value="" placeholder="10 ψηφία" pattern="[0-9]{10}" title="Παρακαλώ εισάγετε 10-ψήφιο αριθμο!" required />
+             <input asp-for="Phone" type="text" class="phone form-control"  value="@phone" placeholder="10 ψηφία" pattern="[0-9]{10}" title="Παρακαλώ εισάγετε 10-ψήφιο αριθμο!" required />
         </div>
         <div class="form-group">
             <label asp-for="Email"></label>
-            <input asp-for="Email" type="email" class="email form-control"  value="" placeholder="5-50 χαρακτήρες" required />
+            <input asp-for="Email" type="email" class="email form-control"  value="@email" placeholder="5-50 χαρακτήρες" required />
         </div>
         <div class="form-group">
              <label asp-for="CountryId"></label>
              <select asp-for="CountryId" class="catalog__select form-control" id="country"  required>
                 <option value="">ΕΠΙΛΕΞΤΕ</option>
-@*                <option value="1">Argentina</option>
-                <option value="2">Bangladesh</option>
-                <option value="3">Belgium</option>
-                <option value="4">China</option>
-                <option value="5">Chile</option>
-                <option value="6">Denmark</option>
-                <option value="7">Egypt</option>
-                <option value="8">France</option>
-                <option value="9">Germany</option>
-                <option value="10">Greece</option>
-                <option value="11">India</option>
-                <option value="12">Italy</option>
-                <option value="13">Japan</option>
-                <option value="14">Malaysia</option>
-                <option value="15">Morroco</option>
-                <option value="16">Netherlands</option>
-                <option value="17">Pakistan</option>
-                <option value="18">Portugal</option>
-                <option value="19">Russia</option>
-                <option value="20">Spain</option>
-                <option value="21">Sweeden</option>
-                <option value="22">Turkey</option>
-                <option value="23">USA</option>
-                <option value="24">United Kingdom</option>
-                <option value="25">Venezuela</option>*@
+
             </select>
         </div>
         <div class="radio-container">

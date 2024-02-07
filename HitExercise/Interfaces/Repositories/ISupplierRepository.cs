@@ -5,14 +5,17 @@ namespace HitExercise.Interfaces.Repositories
 {
     public interface ISupplierRepository
     {
-        IEnumerable<Models.Supplier> GetAll();
-        void Add(Models.Supplier supplier);
-        void Update(Models.Supplier supplier); 
-        void Delete(Models.Supplier supplier);
-        Models.Supplier GetById(int id);
+        IEnumerable<Supplier> GetAll();
+        void Add(Supplier supplier);
+        void Update(Supplier supplier); 
+        void Delete(Supplier supplier);
+        Supplier GetById(int id);
         bool ExistsWithName(string name);
         bool ExistsEditableName(string name);
-        public bool isAfmValid(string afmNumber);
-        public void Dispose();
+        bool isAfmValid(string afmNumber);
+        void Dispose();
+        IEnumerable<Supplier> GetSuppliersByCategoryId(int id);
+        IEnumerable<Supplier> GetSuppliersByCountryId(int id);
+        IEnumerable<Supplier> GetSuppliersBySearching(string searchingString);
     }
 }
