@@ -16,7 +16,7 @@ HIT EXERCISE
 * SQL Server Management Studio 19
 
 **Οδηγίες Εγκατάστασης:**
-* Kάνετε import την database στο SQL Server Management Studio
+* Kάνετε Restore Database to HitDb.bak στο SQL Server Management Studio
 * Στο αρχείο appsettings.json 3η γραμμή αλλάζετε όπου "DESKTOP-61DUF3U\\SQLEXPRESS01" με την ονομασία του δικού σας server
 * Μέσω Nugget Package Manager κάνετε install τα εξής:
    *  Microsoft.AspNet.WebApi.Core 5.3.0
