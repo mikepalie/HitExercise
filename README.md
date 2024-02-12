@@ -6,14 +6,21 @@ HIT EXERCISE
 
 
 
-Τεχνολογίες:
+**Τεχνολογίες:**
 
-C#,.Net 5(MVC)
-Entity Framework
-Visual Studio 2022
-SQL Server Management Studio 19
-HTML,CSS,Bootstrap
-Razor Pages
+* C#(10),.Net 5(MVC)
+* Entity Framework
+* HTML,CSS,Bootstrap
+* Razor Pages
+* Visual Studio 2022
+* SQL Server Management Studio 19
 
-Οδηγίες Εγκατάστασης:
-*Αρχικά θα πρέπει να κάνετε import την database στο SQL Server Management Studio. Στη συνέχεια πρέπει στο αρχείο appsettings.json 3η γραμμή να αλλάξετε όπου "DESKTOP-61DUF3U\\SQLEXPRESS01" με την ονομασία του δικού σας server.Έπειτα μέσω Nugget Package Manager κάνετε install τα εξής: Microsoft.AspNet.WebApi.Core 5.3.0, Microsoft.EntityFrameworkCore 
+**Οδηγίες Εγκατάστασης:**
+* Kάνετε Restore Database to HitDb.bak στο SQL Server Management Studio
+* Στο αρχείο appsettings.json 3η γραμμή αλλάζετε όπου "DESKTOP-61DUF3U\\SQLEXPRESS01" με την ονομασία του δικού σας server
+* Μέσω Nugget Package Manager κάνετε install τα εξής:
+   *  Microsoft.AspNet.WebApi.Core 5.3.0
+   *  Microsoft.EntityFrameworkCore 5.0.17
+   *  Microsoft.EntityFrameworkCore.SqlServer 5.0.17
+   *  Microsoft.EntityFrameworkCore.Tools 5.0.17
+* Τρέξτε το project  
